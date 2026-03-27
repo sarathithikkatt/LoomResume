@@ -1,0 +1,76 @@
+{
+  "personal_info": {
+    "name": "Sarath I S",
+    "label": "Senior Backend Engineer | Platform & Infrastructure",
+    "email": "sarathithikkatt@gmail.com",
+    "phone": "+91 98461 95666",
+    "location": "Gurgaon, India",
+    "linkedin": "https://linkedin.com/in/sarathithikkatt",
+    "github": "https://github.com/sarathithikkatt"
+  },
+  "summary": "Backend engineer with 3.6 years designing distributed systems and event-driven infrastructure with a strong platform engineering streak. Expertise in Go, AWS, and scaling microservices to 500K+ users.",
+  "experience": [
+    {
+      "company": "One Impression",
+      "role": "Software Development Engineer 2 — Platform",
+      "duration": "Jun 2025 – Mar 2026",
+      "bullets": [
+        {
+          "text": "Orchestrated full EC2 to ECS Fargate migration using Terraform, cutting infra management overhead by 40% and deployment time by 50%.",
+          "tags": ["AWS", "ECS", "Terraform", "Infrastructure", "DevOps", "CI/CD"]
+        },
+        {
+          "text": "Re-architected async processing with AWS SQS FIFO & Standard queues, achieving near-zero message loss and 30% reduction in incidents.",
+          "tags": ["Messaging", "SQS", "Reliability", "Architecture"]
+        },
+        {
+          "text": "Led R&D for a distributed video scoring platform, productionizing via SQS-driven pipeline and increasing throughput 8x.",
+          "tags": ["R&D", "Video Processing", "Scalability", "Backend"]
+        },
+        {
+          "text": "Rebuilt KYC platform with pluggable verification vendors, reducing vendor onboarding time by 60% and document rollout by 70%.",
+          "tags": ["System Design", "Backend", "API Integration", "Productivity"]
+        },
+        {
+          "text": "Architected parallel AI transcription pipeline using Sarvam AI and concurrent worker pools, reducing turnaround time by 45%.",
+          "tags": ["AI", "Concurrency", "Go", "Performance"]
+        }
+      ]
+    },
+    {
+      "company": "Shiprocket",
+      "role": "Software Development Engineer",
+      "duration": "Jul 2022 – May 2025",
+      "bullets": [
+        {
+          "text": "Re-architected invoice reconciliation as a Kafka-driven concurrent Go service, maintaining <15% CPU under peak load.",
+          "tags": ["Go", "Kafka", "Performance", "Concurrency"]
+        },
+        {
+          "text": "Scaled event-driven Node.js services to support 500K+ users across web and mobile with high availability.",
+          "tags": ["Node.js", "Scale", "Event-Driven", "Mobile Backend"]
+        },
+        {
+          "text": "Integrated 180+ city carrier APIs enabling 30-minute hyperlocal delivery SLA for 15,000+ daily shipments.",
+          "tags": ["API", "Logistics", "Scale"]
+        },
+        {
+          "text": "Redesigned reporting pipeline using SQL, Elasticsearch, and Snowflake, reducing generation time by 80%.",
+          "tags": ["Data", "SQL", "Elasticsearch", "Snowflake", "Optimization"]
+        }
+      ]
+    }
+  ],
+  "skills": {
+    "cloud_infra": ["AWS", "ECS Fargate", "SQS", "Lambda", "Terraform", "Docker"],
+    "languages": ["Go", "Python", "Node.js", "TypeScript", "Bash"],
+    "data_messaging": ["PostgreSQL", "MongoDB", "Redis", "Kafka", "RabbitMQ", "Snowflake"],
+    "observability": ["ELK Stack", "Grafana", "New Relic", "CloudWatch"]
+  },
+  "education": {
+    "degree": "B.Tech, Computer Science & Engineering",
+    "institution": "Christ College of Engineering",
+    "stats": "CGPA: 7.66 / 10",
+    "awards": ["Smart India Hackathon 1st Prize", "IEEE Publication"]
+  }
+}
