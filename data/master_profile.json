@@ -8,7 +8,7 @@
     "linkedin": "https://linkedin.com/in/sarathithikkatt",
     "github": "https://github.com/sarathithikkatt"
   },
-  "summary": "Backend engineer with 3.6 years designing distributed systems and event-driven infrastructure with a strong platform engineering streak. Expertise in Go, AWS, and scaling microservices to 500K+ users.",
+  "summary": "Backend engineer with ~4 years designing distributed systems and event-driven infrastructure with a strong platform engineering streak. Expertise in Go, Python, AWS, and scaling microservices to 500K+ users.",
   "experience": [
     {
       "company": "One Impression",
@@ -16,61 +16,132 @@
       "duration": "Jun 2025 – Mar 2026",
       "bullets": [
         {
-          "text": "Orchestrated full EC2 to ECS Fargate migration using Terraform, cutting infra management overhead by 40% and deployment time by 50%.",
-          "tags": ["AWS", "ECS", "Terraform", "Infrastructure", "DevOps", "CI/CD"]
+          "text": "Orchestrated full EC2 to ECS Fargate migration, cutting infra management overhead by 40% and deployment time by 50%; established CI/CD standards, zero-downtime strategies, and auto-scaling policies.",
+          "tags": ["AWS", "ECS", "Infrastructure", "DevOps", "CI/CD"]
         },
         {
-          "text": "Re-architected async processing with AWS SQS FIFO & Standard queues, achieving near-zero message loss and 30% reduction in incidents.",
-          "tags": ["Messaging", "SQS", "Reliability", "Architecture"]
+          "text": "Re-architected async processing with AWS SQS FIFO & Standard queues via Django, achieving near-zero message loss and reducing queue-related incidents by 50%.",
+          "tags": ["Messaging", "SQS", "Django", "Reliability", "Architecture"]
         },
         {
-          "text": "Led R&D for a distributed video scoring platform, productionizing via SQS-driven pipeline and increasing throughput 8x.",
-          "tags": ["R&D", "Video Processing", "Scalability", "Backend"]
+          "text": "Led end-to-end R&D for a distributed video scoring platform — benchmarked custom models against Google's UVQ on accuracy, latency, and CPU — productionizing via SQS-driven pipeline and increasing throughput 8×.",
+          "tags": ["R&D", "Video Processing", "Scalability", "Benchmarking", "Backend"]
         },
         {
-          "text": "Rebuilt KYC platform with pluggable verification vendors, reducing vendor onboarding time by 60% and document rollout by 70%.",
-          "tags": ["System Design", "Backend", "API Integration", "Productivity"]
+          "text": "Implemented lossless re-encoding and preview compression for large UGC videos (≤500MB), reducing load times by 40% and accelerating moderation and brand approval SLAs.",
+          "tags": ["Video Processing", "Performance", "Optimization", "UGC"]
         },
         {
-          "text": "Architected parallel AI transcription pipeline using Sarvam AI and concurrent worker pools, reducing turnaround time by 45%.",
-          "tags": ["AI", "Concurrency", "Go", "Performance"]
+          "text": "Rebuilt KYC platform with pluggable verification vendors and extensible document abstractions; reduced vendor onboarding by 60%, document rollout time by 70%, and overall KYC throughput by 35%.",
+          "tags": ["System Design", "Backend", "API Integration", "Extensibility"]
+        },
+        {
+          "text": "Architected a parallel AI transcription pipeline using Sarvam AI, benchmarking India-accent speech models on accuracy and inference latency; mentored a junior engineer through full production rollout.",
+          "tags": ["AI", "Transcription", "Benchmarking", "Mentorship", "Python"]
+        },
+        {
+          "text": "Designed and maintained RESTful APIs using Python (Django & DRF) for video scoring and KYC workflows, evolving partner-facing APIs while maintaining backward compatibility.",
+          "tags": ["Python", "Django", "DRF", "API Design", "REST"]
+        }
+      ]
+    },
+    {
+      "company": "Shiprocket",
+      "role": "Software Development Engineer 2 — Platform",
+      "duration": "Jan 2024 – May 2025",
+      "bullets": [
+        {
+          "text": "Re-architected invoice reconciliation as a Kafka-driven concurrent Go microservice, maintaining <15% CPU under peak load and significantly improving reliability.",
+          "tags": ["Go", "Kafka", "Performance", "Concurrency", "Microservices"]
+        },
+        {
+          "text": "Scaled event-driven Node.js proof-of-concept into a production-grade distributed service supporting 500K+ Gmail-synced users across web and mobile with high availability.",
+          "tags": ["Node.js", "Scale", "Event-Driven", "Distributed Systems"]
+        },
+        {
+          "text": "Redesigned reporting pipeline using SQL, Elasticsearch, and Snowflake warehousing, reducing internal report generation time by 80%.",
+          "tags": ["Data", "SQL", "Elasticsearch", "Snowflake", "Optimization"]
+        },
+        {
+          "text": "Designed and implemented AWS Lambda serverless functions to enable autoscaling and improve system efficiency.",
+          "tags": ["AWS", "Lambda", "Serverless", "Cloud"]
         }
       ]
     },
     {
       "company": "Shiprocket",
       "role": "Software Development Engineer",
-      "duration": "Jul 2022 – May 2025",
+      "duration": "Jul 2022 – Dec 2023",
       "bullets": [
         {
-          "text": "Re-architected invoice reconciliation as a Kafka-driven concurrent Go service, maintaining <15% CPU under peak load.",
-          "tags": ["Go", "Kafka", "Performance", "Concurrency"]
+          "text": "Designed fine-grained RBAC for store-level users, enabling secure role-scoped access to operational data.",
+          "tags": ["Security", "RBAC", "Access Control", "Backend"]
         },
         {
-          "text": "Scaled event-driven Node.js services to support 500K+ users across web and mobile with high availability.",
-          "tags": ["Node.js", "Scale", "Event-Driven", "Mobile Backend"]
+          "text": "Integrated multiple logistics carrier APIs, expanding services to 180+ cities and facilitating 10,000+ daily hyperlocal shipments.",
+          "tags": ["API Integration", "Logistics", "Scale"]
         },
         {
-          "text": "Integrated 180+ city carrier APIs enabling 30-minute hyperlocal delivery SLA for 15,000+ daily shipments.",
-          "tags": ["API", "Logistics", "Scale"]
+          "text": "Built concurrent Go parsers to extract invoice data from major e-commerce platforms, improving data accuracy by 90% and expanding supported sources by 67%.",
+          "tags": ["Go", "Concurrency", "Parsing", "Data Accuracy"]
         },
         {
-          "text": "Redesigned reporting pipeline using SQL, Elasticsearch, and Snowflake, reducing generation time by 80%.",
-          "tags": ["Data", "SQL", "Elasticsearch", "Snowflake", "Optimization"]
+          "text": "Implemented Estimated Delivery Date (EDD) widgets contributing to a 60% relative increase in checkout conversion rates.",
+          "tags": ["Product Impact", "Conversion", "Backend", "Logistics"]
+        },
+        {
+          "text": "Developed an operations dashboard with key performance metrics, increasing operational productivity by 70%; contributed to ShipCoins loyalty program.",
+          "tags": ["Dashboard", "Productivity", "Product"]
+        },
+        {
+          "text": "Optimized SQL queries and indexing strategies using Elasticsearch and Snowflake; maintained server utilization below 15% under peak loads.",
+          "tags": ["SQL", "Elasticsearch", "Performance", "Optimization"]
+        }
+      ]
+    },
+    {
+      "company": "Shiprocket",
+      "role": "Graduate Engineering Trainee",
+      "duration": "Jul 2022 – Sep 2022",
+      "bullets": [
+        {
+          "text": "Developed custom Scheduled Reporting systems using RabbitMQ, generating 100+ reports per hour for tailored client insights.",
+          "tags": ["RabbitMQ", "Reporting", "Backend"]
+        },
+        {
+          "text": "Engineered a Wrapper API reducing user interaction steps by 75% for shipment scheduling workflows.",
+          "tags": ["API Design", "Developer Experience", "Backend"]
+        },
+        {
+          "text": "Contributed to zero-to-deployment lifecycle of high-impact projects with a focus on scaling, optimization, and production integration.",
+          "tags": ["Ownership", "Deployment", "Backend"]
         }
       ]
     }
   ],
+  "projects": [
+    {
+      "name": "StealthAssistant",
+      "description": "Offline-first agentic desktop assistant with dual context pipelines — OCR-based screen capture and Whisper speech transcription — routed to a locally-hosted LLM via Ollama. Built with Python/PyQt6 with OS-level screen-capture exclusion for privacy.",
+      "tags": ["Python", "PyQt6", "LLM", "Ollama", "Whisper", "OCR", "AI", "Privacy"]
+    }
+  ],
   "skills": {
-    "cloud_infra": ["AWS", "ECS Fargate", "SQS", "Lambda", "Terraform", "Docker"],
     "languages": ["Go", "Python", "Node.js", "TypeScript", "Bash"],
-    "data_messaging": ["PostgreSQL", "MongoDB", "Redis", "Kafka", "RabbitMQ", "Snowflake"],
-    "observability": ["ELK Stack", "Grafana", "New Relic", "CloudWatch"]
+    "frameworks": ["Django", "DRF", "Express.js"],
+    "cloud_infra": ["AWS", "ECS Fargate", "SQS", "Lambda", "EC2", "Docker"],
+    "data_messaging": ["PostgreSQL", "MongoDB", "Redis", "Kafka", "RabbitMQ", "Snowflake", "Elasticsearch"],
+    "observability": ["ELK Stack", "Grafana", "New Relic", "CloudWatch"],
+    "dev_tooling": ["Claude Code", "Cursor", "Postman", "RedisInsight", "Git"]
   },
   "education": {
     "degree": "B.Tech, Computer Science & Engineering",
     "institution": "Christ College of Engineering",
     "stats": "CGPA: 7.66 / 10",
-    "awards": ["Smart India Hackathon 1st Prize", "IEEE Publication"]
+    "awards": [
+      "Smart India Hackathon — 1st Prize",
+      "IEEE Publication — Theft Detection System",
+      "Kerala Startup Mission — Most Innovative Tech Product"
+    ]
   }
 }
