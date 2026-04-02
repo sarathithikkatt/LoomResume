@@ -1,0 +1,80 @@
+# ----------------------
+# Python
+# ----------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# ----------------------
+# Environment variables
+# ----------------------
+.env
+.env.*
+
+# ----------------------
+# Packaging / build
+# ----------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ----------------------
+# Logs
+# ----------------------
+*.log
+logs/
+
+# ----------------------
+# IDE / Editor
+# ----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ----------------------
+# OS files
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# Testing
+# ----------------------
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ----------------------
+# Type checking / linting
+# ----------------------
+.mypy_cache/
+.ruff_cache/
+
+# ----------------------
+# Data (LLM memory, embeddings, etc.)
+# ----------------------
+data/*
+!data/.gitkeep
+
+# ----------------------
+# Vector DB / embeddings
+# ----------------------
+*.faiss
+*.db
+*.sqlite3
+
+# ----------------------
+# Docker (optional)
+# ----------------------
+*.pid
+*.seed
+*.out
