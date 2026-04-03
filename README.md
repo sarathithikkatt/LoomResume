@@ -36,20 +36,6 @@ This tool automates the **strategic** part of resume writing:
 - [ ] **Page Buffer Logic:** If the AI writes too much, the system triggers a "Truncation Chain" to trim the least relevant content until it fits on exactly one page.
 - [ ] **Privacy First:** By using Ollama, your personal career data never leaves your machine.
 
----
-
-## 📂 Project Structure (Planned)
-
-```text
-├── data/
-│   └── master_profile.json   # Your full career "Source of Truth"
-├── src/
-│   ├── chains/
-│   │   ├── analyzer.py       # JD Keyword Extraction
-│   │   ├── generator.py      # The "Tailoring" Engine
-│   │   └── validator.py      # The "1-page" checker
-│   ├── templates/            # HTML/CSS ATS-friendly layouts
-│   └── main.py               # The CLI Entry point
-├── tests/                    # LangSmith eval datasets
-├── .env                      # API Keys (LangSmith/OpenAI)
-└── README.md
+## Notes for dev:
+    to run
+        python -m uvicorn app.main:app --reload

@@ -1,8 +1,12 @@
-from app.models.schemas import ChatRequest
+from fastapi import APIRouter
+
+from app.schemas.schemas import ChatRequest
 from app.services import llm_service
 
 
-@app.post("/chat")
+router = APIRouter()
+
+@router.post("/chat", tags=["Chat"])
 async def chat(req: ChatRequest):
     response = await llm_service.generate(
         prompt=req.message,
