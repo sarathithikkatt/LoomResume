@@ -6,7 +6,7 @@ from app.services import llm_service
 
 router = APIRouter()
 
-@router.post("/chat", tags=["Chat"])
+@router.post("/", tags=["Chat"])
 async def chat(req: ChatRequest):
     response = await llm_service.generate(
         prompt=req.message,

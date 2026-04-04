@@ -2,6 +2,6 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.post("/agents", tags=["Agents"])
+@router.post("/", tags=["Agents"])
 async def agents():
     pass
