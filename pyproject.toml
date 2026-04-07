@@ -24,9 +24,18 @@ dependencies = [
 
     # Config
     "python-dotenv>=1.0.1",
+    "pydantic-settings>=2.3.4",
 
     # Validation
     "pydantic>=2.8.0",
+
+    # Database
+    "sqlalchemy>=2.0.31",
+    "psycopg2-binary>=2.9.9",
+    "langchain-postgres>=0.0.9",
+
+    # Rendering
+    "weasyprint>=62.3",
 ]
 
 [tool.setuptools.packages.find]
