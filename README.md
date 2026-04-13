@@ -16,6 +16,23 @@
 - **Frontend:** Chat-first interface (Next.js/Tailwind)
 - **Formatting:** LaTeX (PDF), Markdown (READMEs)
 
+## � Database Migrations
+This repo uses ordered SQL migration scripts in `migrations/` to define the core schema and indexes.
+
+Alembic is also configured for SQLAlchemy-based schema management.
+- `alembic.ini` and `alembic/env.py` are set up to use `app.core.config.settings.SQLALCHEMY_DATABASE_URL`.
+- `alembic` reads model metadata from `app.db.models.Base.metadata`.
+
+Example commands:
+```bash
+python -m pip install -e .[dev]
+alembic revision --autogenerate -m "describe change"
+alembic upgrade head
+alembic history --verbose
+```
+
+If you want to keep the existing SQL path, continue to apply `migrations/*.sql` in numeric order.
+
 ## 🗺 Roadmap
 - [ ] **Phase 1:** Core RAG & Experience Node Extraction.
 - [ ] **Phase 2:** JD Keyword Matching & PDF Generation.
