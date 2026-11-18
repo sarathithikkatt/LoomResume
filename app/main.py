@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1 import agents, chats, health, ingest, jd, refraction, resume
 from app.core.database import init_db
 from app.core.config import settings
@@ -26,6 +27,14 @@ app = FastAPI(
     description="An API for LLM-based resume analysis and generation",
     version=settings.VERSION,
     lifespan=lifespan
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(chats.router, prefix=f"{settings.API_V1_STR}/chat")
