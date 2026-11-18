@@ -25,10 +25,10 @@ class RetrievalService:
         embedding_str = embedding if isinstance(embedding, str) else str(embedding)
         query = text("""
             SELECT id, company, role, duration, raw_text, tags,
-                   1 - (embedding <=> :embedding::vector) as similarity
+                   1 - (embedding <=> CAST(:embedding AS vector)) as similarity
             FROM experience_nodes
             WHERE user_id = :user_id AND embedding IS NOT NULL
-            ORDER BY embedding <=> :embedding::vector
+            ORDER BY embedding <=> CAST(:embedding AS vector)
             LIMIT :limit
         """)
         results = db.execute(
@@ -61,10 +61,10 @@ class RetrievalService:
         embedding_str = embedding if isinstance(embedding, str) else str(embedding)
         query = text("""
             SELECT id, name, description, tags,
-                   1 - (embedding <=> :embedding::vector) as similarity
+                   1 - (embedding <=> CAST(:embedding AS vector)) as similarity
             FROM projects
             WHERE user_id = :user_id AND embedding IS NOT NULL
-            ORDER BY embedding <=> :embedding::vector
+            ORDER BY embedding <=> CAST(:embedding AS vector)
             LIMIT :limit
         """)
         results = db.execute(

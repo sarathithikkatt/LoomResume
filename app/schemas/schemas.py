@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class ChatRequest(BaseModel):
     chat_id: str
     message: str
-    model: str = "gpt-4o"  # LiteLLM model string: "gpt-4o", "claude-sonnet-4-20250514", "ollama/llama3.1"
+    model: str | None = None  # LiteLLM model string; defaults to settings.LLM_DEFAULT_MODEL
     system_prompt: str | None = None
     temperature: float = 0.7
 

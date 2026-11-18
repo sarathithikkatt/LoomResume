@@ -115,10 +115,10 @@ class JDService:
             results = db.execute(
                 text("""
                     SELECT id, company, role, raw_text,
-                           1 - (embedding <=> :embedding::vector) as similarity
+                           1 - (embedding <=> CAST(:embedding AS vector)) as similarity
                     FROM experience_nodes
                     WHERE user_id = :user_id AND embedding IS NOT NULL
-                    ORDER BY embedding <=> :embedding::vector
+                    ORDER BY embedding <=> CAST(:embedding AS vector)
                     LIMIT 10
                 """),
                 {"embedding": embedding_str, "user_id": user_id},
@@ -143,10 +143,10 @@ class JDService:
             proj_results = db.execute(
                 text("""
                     SELECT id, name, description,
-                           1 - (embedding <=> :embedding::vector) as similarity
+                           1 - (embedding <=> CAST(:embedding AS vector)) as similarity
                     FROM projects
                     WHERE user_id = :user_id AND embedding IS NOT NULL
-                    ORDER BY embedding <=> :embedding::vector
+                    ORDER BY embedding <=> CAST(:embedding AS vector)
                     LIMIT 5
                 """),
                 {"embedding": embedding_str, "user_id": user_id},
@@ -218,10 +218,10 @@ class JDService:
         results = db.execute(
             text("""
                 SELECT id, company, role, raw_text, tags,
-                       1 - (embedding <=> :embedding::vector) as similarity
+                       1 - (embedding <=> CAST(:embedding AS vector)) as similarity
                 FROM experience_nodes
                 WHERE user_id = :user_id AND embedding IS NOT NULL
-                ORDER BY embedding <=> :embedding::vector
+                ORDER BY embedding <=> CAST(:embedding AS vector)
                 LIMIT :top_k
             """),
             {"embedding": embedding_str, "user_id": user_id, "top_k": top_k},
