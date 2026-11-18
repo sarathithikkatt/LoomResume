@@ -433,7 +433,83 @@ class TestInterconnectivity:
         assert resp.content.startswith(b"%PDF-")
 
     def test_chat_assistant_flow_via_rest(self, test_client):
-        payload = {"message": "Hello LoomResume identity engine!", "temperature": 0.2}
+        payload = {"chat_id": "comprehensive_chat", "message": "Hello LoomResume identity engine!", "temperature": 0.2}
         resp = test_client.post("/api/v1/chat/", json=payload)
         assert resp.status_code == 200
         assert "response" in resp.json()
+
+
+# =====================================================================
+# SECTION 3: OVERALL SYSTEM INTEGRATION (APP AS A SINGLE COMPONENT)
+# =====================================================================
+
+class TestUnifiedCandidateJourney:
+    """End-to-End unified candidate journey through the entire application stack."""
+
+    def test_complete_candidate_journey(self, test_client):
+        # 1. Health check
+        h_resp = test_client.get("/api/v1/health/")
+        assert h_resp.status_code == 200
+        assert h_resp.json()["status"] == "ok"
+
+        # 2. Vault inspection
+        v_resp = test_client.get("/api/v1/ingest/vault")
+        assert v_resp.status_code == 200
+        v_data = v_resp.json()
+        u_id = v_data["user"]["id"]
+        u_email = v_data["user"]["email"]
+
+        # 3. Analyze Job Description
+        target_jd = (
+            "Senior Distributed Systems Engineer. "
+            "Stack: Go, Kubernetes, Kafka, Terraform, AWS, Microservices. "
+            "Architect high-availability systems with strict latency SLAs."
+        )
+        jd_post = test_client.post("/api/v1/jd/analyze", json={"jd_text": target_jd, "user_email": u_email})
+        assert jd_post.status_code == 200
+        sess_id = jd_post.json()["session_id"]
+
+        # 4. Score candidate against JD
+        s_resp = test_client.get(f"/api/v1/jd/{sess_id}/score?user_id={u_id}")
+        assert s_resp.status_code == 200
+        assert "overall_score" in s_resp.json()
+
+        # 5. Retrieve ranked matches
+        m_resp = test_client.get(f"/api/v1/jd/{sess_id}/matches?user_id={u_id}")
+        assert m_resp.status_code == 200
+        matches = m_resp.json()["matches"]
+        assert len(matches) > 0
+        top_node_id = matches[0]["node_id"]
+
+        # 6. Refract experience node
+        ref_post = test_client.post(
+            "/api/v1/refraction/",
+            json={"experience_node_id": top_node_id, "lens": "platform", "user_id": u_id},
+        )
+        assert ref_post.status_code == 200
+        ref_data = ref_post.json()
+
+        # 7. Verify diff
+        diff_get = test_client.get(f"/api/v1/refraction/{ref_data['refraction_id']}/diff")
+        assert diff_get.status_code == 200
+
+        # 8. Compile resume
+        res_post = test_client.post(
+            "/api/v1/resume/generate",
+            json={"jd_session_id": sess_id, "user_id": u_id, "lens": "platform", "template": "modern"},
+        )
+        assert res_post.status_code == 200
+        resume_id = res_post.json()["resume_id"]
+
+        # 9. Download PDF
+        pdf_get = test_client.get(f"/api/v1/resume/{resume_id}/pdf")
+        assert pdf_get.status_code == 200
+        assert pdf_get.content.startswith(b"%PDF-")
+
+        # 10. Chat with identity assistant
+        chat_post = test_client.post(
+            "/api/v1/chat/",
+            json={"chat_id": "unified_journey", "message": "Can you highlight my experience with Kubernetes?", "temperature": 0.2},
+        )
+        assert chat_post.status_code == 200
+        assert "response" in chat_post.json()

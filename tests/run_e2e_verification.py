@@ -341,7 +341,7 @@ async def run_all_tests():
         ("GET", f"/api/v1/resume/{resume_id}" if resume_id else None, None, 200),
         ("GET", f"/api/v1/resume/{resume_id}/pdf" if resume_id else None, None, 200),
         ("POST", "/api/v1/resume/render-pdf", {"html_content": "<h1>Test</h1>"}, 200),
-        ("POST", "/api/v1/chat/", {"message": "Test message", "temperature": 0.1}, 200),
+        ("POST", "/api/v1/chat/", {"chat_id": "e2e_test", "message": "Test message", "temperature": 0.1}, 200),
     ]
 
     for method, path, payload, expected_status in endpoints_to_test:
@@ -475,9 +475,9 @@ async def run_all_tests():
         # 12. Chat with Identity Assistant
         chat_post = client.post(
             "/api/v1/chat/",
-            json={"message": "What are my strengths for a Staff Platform Engineer role?", "temperature": 0.2},
+            json={"chat_id": "journey_chat", "message": "What are my strengths for a Staff Platform Engineer role?", "temperature": 0.2},
         )
-        assert chat_post.status_code == 200
+        assert chat_post.status_code == 200, f"Chat endpoint failed with status {chat_post.status_code}: {chat_post.text}"
 
         journey_duration = time.time() - t0
         report.record(
@@ -488,7 +488,9 @@ async def run_all_tests():
             f"Successfully executed all 12 steps in {journey_duration:.2f}s. Hybrid Score: {s_data['overall_score']}%, PDF: {len(pdf_get.content)} bytes, Project: '{gap_blueprint.get('project_name', 'Blueprint')}', Questions: {len(mock_qs)}",
         )
     except Exception as e:
-        report.record("Phase 3", "End-to-End System", "Complete Candidate Journey", False, str(e))
+        import traceback
+        traceback.print_exc()
+        report.record("Phase 3", "End-to-End System", "Complete Candidate Journey", False, f"{type(e).__name__}: {str(e) or 'Assertion check failed'}")
 
     db.close()
     success = report.print_summary()
