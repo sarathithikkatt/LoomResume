@@ -4,6 +4,6 @@ CREATE TABLE projects (
     name        TEXT NOT NULL,
     description TEXT,
     tags        TEXT[],
-    embedding   VECTOR(1536),
+    embedding   VECTOR(768),
     created_at  TIMESTAMPTZ DEFAULT now()
 );

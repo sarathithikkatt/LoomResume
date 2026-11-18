@@ -5,7 +5,7 @@ CREATE TABLE refractions (
     user_id        UUID REFERENCES users(id) ON DELETE CASCADE,
     lens           TEXT NOT NULL,
     reframed_text  TEXT NOT NULL,
-    embedding      VECTOR(1536),
+    embedding      VECTOR(768),
     created_at     TIMESTAMPTZ DEFAULT now(),
     UNIQUE (source_id, lens)
 );

@@ -8,6 +8,6 @@ CREATE TABLE experience_nodes (
     end_date    DATE,
     raw_text    TEXT NOT NULL,
     tags        TEXT[],
-    embedding   VECTOR(1536),
+    embedding   VECTOR(768),
     created_at  TIMESTAMPTZ DEFAULT now()
 );

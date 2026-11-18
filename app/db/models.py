@@ -13,11 +13,16 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 from sqlalchemy.types import UserDefinedType
 
+from app.core.config import settings
+
 Base = declarative_base()
+
+# Use configured embedding dimensions (768 for Ollama nomic-embed-text, 1536 for OpenAI)
+EMBED_DIM = settings.EMBEDDING_DIMENSIONS
 
 
 class VECTOR(UserDefinedType):
-    def __init__(self, dimensions: int = 1536):
+    def __init__(self, dimensions: int = EMBED_DIM):
         self.dimensions = dimensions
 
     def get_col_spec(self, **kw):
@@ -52,7 +57,7 @@ class ExperienceNode(Base):
     end_date = Column(Date)
     raw_text = Column(Text, nullable=False)
     tags = Column(ARRAY(Text))
-    embedding = Column(VECTOR(1536))
+    embedding = Column(VECTOR(EMBED_DIM))
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
 
 
@@ -64,7 +69,7 @@ class Project(Base):
     name = Column(Text, nullable=False)
     description = Column(Text)
     tags = Column(ARRAY(Text))
-    embedding = Column(VECTOR(1536))
+    embedding = Column(VECTOR(EMBED_DIM))
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
 
 
@@ -88,7 +93,7 @@ class Refraction(Base):
     user_id = Column(PG_UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"))
     lens = Column(Text, nullable=False)
     reframed_text = Column(Text, nullable=False)
-    embedding = Column(VECTOR(1536))
+    embedding = Column(VECTOR(EMBED_DIM))
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
 
     __table_args__ = (UniqueConstraint("source_id", "lens", name="uq_refractions_source_id_lens"),)
@@ -101,7 +106,7 @@ class JDSession(Base):
     user_id = Column(PG_UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"))
     jd_text = Column(Text, nullable=False)
     keywords = Column(ARRAY(Text))
-    jd_embedding = Column(VECTOR(1536))
+    jd_embedding = Column(VECTOR(EMBED_DIM))
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
 
 

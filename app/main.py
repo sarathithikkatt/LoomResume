@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from app.api.v1 import chats, agents, health
+from app.api.v1 import agents, chats, health, ingest, jd, refraction, resume
 from app.core.database import init_db
 from app.core.config import settings
 from app.core.logging import setup_logging, get_logger
@@ -13,7 +13,10 @@ logger = get_logger(__name__)
 async def lifespan(app: FastAPI):
     # Initialize the database on startup
     logger.info(f"--- 🤖 Starting {settings.PROJECT_NAME} ---")
-    init_db()
+    try:
+        init_db()
+    except Exception as e:
+        logger.warning(f"Database initialization deferred or failed: {e}")
     yield
     # Cleanup logic (if any) can go here
     logger.info(f"--- 🤖 Stopping {settings.PROJECT_NAME} ---")
@@ -25,9 +28,13 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-app.include_router(chats.router, prefix="/chat")
-app.include_router(health.router, prefix="/health")
-app.include_router(agents.router, prefix="/agents")
+app.include_router(chats.router, prefix=f"{settings.API_V1_STR}/chat")
+app.include_router(health.router, prefix=f"{settings.API_V1_STR}/health")
+app.include_router(agents.router, prefix=f"{settings.API_V1_STR}/agents")
+app.include_router(ingest.router, prefix=f"{settings.API_V1_STR}/ingest")
+app.include_router(jd.router, prefix=f"{settings.API_V1_STR}/jd")
+app.include_router(refraction.router, prefix=f"{settings.API_V1_STR}/refraction")
+app.include_router(resume.router, prefix=f"{settings.API_V1_STR}/resume")
 
 @app.get("/")
 def root():

@@ -27,6 +27,15 @@ class Settings(BaseSettings):
     LANGCHAIN_TRACING_V2: bool = False
     LANGCHAIN_API_KEY: Optional[str] = None
     OPENAI_API_KEY: Optional[str] = None
+    ANTHROPIC_API_KEY: Optional[str] = None
+    LLM_DEFAULT_PROVIDER: str = "ollama"
+    LLM_DEFAULT_MODEL: str = "ollama/llama3.1:8b"
+    OLLAMA_API_BASE: str = "http://localhost:11434"
+
+    # Embedding Settings
+    EMBEDDING_PROVIDER: str = "auto"  # "auto", "ollama", "openai"
+    OLLAMA_EMBEDDING_MODEL: str = "nomic-embed-text"
+    EMBEDDING_DIMENSIONS: int = 768  # 768 for nomic-embed-text, 1536 for OpenAI
 
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True, extra="ignore")
 
