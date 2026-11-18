@@ -65,6 +65,29 @@ class TestResumeServiceHTML:
         assert "Technical Skills" in html
         assert "Languages" in html
 
+    def test_render_html_all_templates(self, resume_svc):
+        mock_user = MagicMock()
+        mock_user.email = "sarath@example.com"
+        mock_user.summary = "Distributed systems engineer."
+        mock_user.personal_info = {"name": "Sarath I S"}
+
+        mock_exp = [{"company": "Tech Corp", "role": "Lead", "bullets": ["Built scale-out infra."]}]
+        mock_skill = MagicMock()
+        mock_skill.category = "Tools"
+        mock_skill.skill_name = "Docker"
+
+        for template in ["modern", "classic", "minimal", "executive"]:
+            html = resume_svc.render_html(
+                user=mock_user,
+                grouped_experience=mock_exp,
+                projects=[],
+                skills=[mock_skill],
+                template=template,
+            )
+            assert "Sarath I S" in html
+            assert "Tech Corp" in html
+            assert "Built scale-out infra." in html
+
 
 class TestResumeServicePDF:
     def test_render_pdf(self, resume_svc):

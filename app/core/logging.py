@@ -18,13 +18,14 @@ def setup_logging():
     log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     
     # Configure root logger
+    handlers = [
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler(log_file, mode='a', encoding='utf-8'),
+    ]
     logging.basicConfig(
         level=getattr(logging, settings.LOG_LEVEL.upper(), logging.INFO),
         format=log_format,
-        handlers=[
-            logging.StreamHandler(io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')),
-            logging.FileHandler(log_file, mode='a', encoding='utf-8')
-        ]
+        handlers=handlers,
     )
     
     # Optional: silence some noisy loggers

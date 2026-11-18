@@ -17,64 +17,60 @@ from app.services.refraction_service import refraction_service
 logger = get_logger(__name__)
 
 
-# ── Clean ATS-Optimized HTML/CSS Template ────────────────────────────
+# ── Clean ATS-Optimized CSS Stylesheets & Templates ──────────────────
 
-RESUME_HTML_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-  @page {{
+RESUME_CSS_MODERN = """
+  @page {
     size: letter;
     margin: 0.55in 0.6in;
-  }}
-  * {{
+  }
+  * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }}
-  body {{
+  }
+  body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #1a1a1a;
     line-height: 1.4;
     font-size: 10pt;
     background: #ffffff;
-  }}
-  header {{
+  }
+  header {
     text-align: center;
     border-bottom: 2px solid #2b2b2b;
     padding-bottom: 8px;
     margin-bottom: 12px;
-  }}
-  h1 {{
+  }
+  h1 {
     font-size: 20pt;
     font-weight: 700;
     letter-spacing: -0.5px;
     color: #111827;
     text-transform: uppercase;
-  }}
-  .headline {{
+  }
+  .headline {
     font-size: 11pt;
     font-weight: 600;
     color: #374151;
     margin-top: 2px;
-  }}
-  .contact-bar {{
+  }
+  .contact-bar {
     margin-top: 5px;
     font-size: 9pt;
     color: #4b5563;
-  }}
-  .contact-bar span {{
+  }
+  .contact-bar span {
     margin: 0 6px;
-  }}
-  .contact-bar a {{
+  }
+  .contact-bar a {
     color: #1d4ed8;
     text-decoration: none;
-  }}
-  section {{
+  }
+  section {
     margin-bottom: 12px;
-  }}
-  h2 {{
+  }
+  h2 {
     font-size: 11pt;
     font-weight: 700;
     text-transform: uppercase;
@@ -83,89 +79,447 @@ RESUME_HTML_TEMPLATE = """<!DOCTYPE html>
     border-bottom: 1px solid #d1d5db;
     padding-bottom: 2px;
     margin-bottom: 6px;
-  }}
-  .summary-text {{
+  }
+  .summary-text {
     font-size: 9.5pt;
     text-align: justify;
     color: #374151;
-  }}
-  .job-block, .project-block {{
+  }
+  .job-block, .project-block {
     margin-bottom: 8px;
-  }}
-  .job-header, .project-header {{
+  }
+  .job-header, .project-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 2px;
-  }}
-  .job-title-company {{
+  }
+  .job-title-company {
     font-size: 10pt;
-  }}
-  .company-name {{
+  }
+  .company-name {
     font-weight: 700;
     color: #111827;
-  }}
-  .role-title {{
+  }
+  .role-title {
     font-style: italic;
     color: #374151;
-  }}
-  .job-date {{
+  }
+  .job-date {
     font-size: 9pt;
     color: #6b7280;
     font-weight: 500;
     text-align: right;
-  }}
-  ul.bullets {{
+  }
+  ul.bullets {
     margin-left: 16px;
     margin-top: 3px;
-  }}
-  ul.bullets li {{
+  }
+  ul.bullets li {
     font-size: 9.5pt;
     margin-bottom: 3px;
     color: #1f2937;
     text-align: justify;
-  }}
-  .skills-grid {{
+  }
+  .skills-grid {
     font-size: 9.5pt;
-  }}
-  .skill-row {{
+  }
+  .skill-row {
     margin-bottom: 3px;
-  }}
-  .skill-category {{
+  }
+  .skill-category {
     font-weight: 700;
     color: #1f2937;
     display: inline-block;
     min-width: 140px;
-  }}
-  .skill-items {{
+  }
+  .skill-items {
     color: #374151;
-  }}
+  }
+"""
+
+RESUME_CSS_CLASSIC = """
+  @page {
+    size: letter;
+    margin: 0.5in 0.55in;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    color: #111111;
+    line-height: 1.35;
+    font-size: 10pt;
+    background: #ffffff;
+  }
+  header {
+    text-align: center;
+    border-bottom: 1.5px solid #111111;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 19pt;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #000000;
+    text-transform: uppercase;
+  }
+  .headline {
+    font-size: 10.5pt;
+    font-style: italic;
+    color: #333333;
+    margin-top: 2px;
+  }
+  .contact-bar {
+    margin-top: 4px;
+    font-size: 8.5pt;
+    color: #444444;
+  }
+  .contact-bar span {
+    margin: 0 5px;
+  }
+  .contact-bar a {
+    color: #111111;
+    text-decoration: underline;
+  }
+  section {
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000000;
+    border-bottom: 1px solid #222222;
+    padding-bottom: 1px;
+    margin-bottom: 5px;
+  }
+  .summary-text {
+    font-size: 9.5pt;
+    text-align: justify;
+    color: #222222;
+  }
+  .job-block, .project-block {
+    margin-bottom: 7px;
+  }
+  .job-header, .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+  .job-title-company {
+    font-size: 10pt;
+  }
+  .company-name {
+    font-weight: 700;
+    color: #000000;
+  }
+  .role-title {
+    font-style: italic;
+    color: #333333;
+  }
+  .job-date {
+    font-size: 9pt;
+    color: #333333;
+    font-style: italic;
+    text-align: right;
+  }
+  ul.bullets {
+    margin-left: 18px;
+    margin-top: 2px;
+  }
+  ul.bullets li {
+    font-size: 9.5pt;
+    margin-bottom: 2.5px;
+    color: #111111;
+    text-align: justify;
+  }
+  .skills-grid {
+    font-size: 9.5pt;
+  }
+  .skill-row {
+    margin-bottom: 2px;
+  }
+  .skill-category {
+    font-weight: 700;
+    color: #000000;
+    display: inline-block;
+    min-width: 140px;
+  }
+  .skill-items {
+    color: #222222;
+  }
+"""
+
+RESUME_CSS_MINIMAL = """
+  @page {
+    size: letter;
+    margin: 0.45in 0.5in;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #0f172a;
+    line-height: 1.35;
+    font-size: 9.5pt;
+    background: #ffffff;
+  }
+  header {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 6px;
+  }
+  h1 {
+    font-size: 18pt;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #0f172a;
+  }
+  .headline {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #475569;
+    margin-top: 1px;
+  }
+  .contact-bar {
+    margin-top: 4px;
+    font-size: 8.5pt;
+    color: #64748b;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  .contact-bar span {
+    margin: 0 5px;
+  }
+  .contact-bar a {
+    color: #0284c7;
+    text-decoration: none;
+  }
+  section {
+    margin-bottom: 9px;
+  }
+  h2 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #0f172a;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+  }
+  .summary-text {
+    font-size: 9pt;
+    color: #334155;
+    text-align: justify;
+  }
+  .job-block, .project-block {
+    margin-bottom: 6px;
+  }
+  .job-header, .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1px;
+  }
+  .job-title-company {
+    font-size: 9.5pt;
+  }
+  .company-name {
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .role-title {
+    color: #475569;
+    font-weight: 500;
+  }
+  .job-date {
+    font-size: 8.5pt;
+    color: #64748b;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    text-align: right;
+  }
+  ul.bullets {
+    margin-left: 14px;
+    margin-top: 2px;
+  }
+  ul.bullets li {
+    font-size: 9pt;
+    margin-bottom: 2px;
+    color: #1e293b;
+    text-align: justify;
+  }
+  .skills-grid {
+    font-size: 9pt;
+  }
+  .skill-row {
+    margin-bottom: 2px;
+  }
+  .skill-category {
+    font-weight: 700;
+    color: #0f172a;
+    display: inline-block;
+    min-width: 130px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 8.5pt;
+  }
+  .skill-items {
+    color: #334155;
+  }
+"""
+
+RESUME_CSS_EXECUTIVE = """
+  @page {
+    size: letter;
+    margin: 0.5in 0.55in;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    color: #1e293b;
+    line-height: 1.4;
+    font-size: 9.8pt;
+    background: #ffffff;
+  }
+  header {
+    border-bottom: 3px solid #1e3a8a;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 21pt;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: #1e3a8a;
+  }
+  .headline {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #475569;
+    margin-top: 2px;
+  }
+  .contact-bar {
+    margin-top: 5px;
+    font-size: 9pt;
+    color: #64748b;
+  }
+  .contact-bar span {
+    margin: 0 6px;
+  }
+  .contact-bar a {
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  section {
+    margin-bottom: 11px;
+  }
+  h2 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #1e3a8a;
+    border-left: 3px solid #1e3a8a;
+    padding-left: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+    margin-bottom: 6px;
+  }
+  .summary-text {
+    font-size: 9.5pt;
+    color: #334155;
+    text-align: justify;
+  }
+  .job-block, .project-block {
+    margin-bottom: 8px;
+  }
+  .job-header, .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+  .job-title-company {
+    font-size: 10pt;
+  }
+  .company-name {
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .role-title {
+    color: #2563eb;
+    font-weight: 600;
+  }
+  .job-date {
+    font-size: 8.8pt;
+    color: #64748b;
+    font-weight: 500;
+    text-align: right;
+  }
+  ul.bullets {
+    margin-left: 16px;
+    margin-top: 3px;
+  }
+  ul.bullets li {
+    font-size: 9.4pt;
+    margin-bottom: 2.5px;
+    color: #1e293b;
+    text-align: justify;
+  }
+  .skills-grid {
+    font-size: 9.4pt;
+  }
+  .skill-row {
+    margin-bottom: 3px;
+  }
+  .skill-category {
+    font-weight: 700;
+    color: #1e3a8a;
+    display: inline-block;
+    min-width: 140px;
+  }
+  .skill-items {
+    color: #334155;
+  }
+"""
+
+RESUME_CSS_TEMPLATES: dict[str, str] = {
+    "modern": RESUME_CSS_MODERN,
+    "classic": RESUME_CSS_CLASSIC,
+    "minimal": RESUME_CSS_MINIMAL,
+    "executive": RESUME_CSS_EXECUTIVE,
+}
+
+def _build_html_document(css: str, body_html: str) -> str:
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+{css}
 </style>
 </head>
 <body>
-
-<header>
-  <h1>{name}</h1>
-  {label_html}
-  <div class="contact-bar">
-    {contact_items}
-  </div>
-</header>
-
-{summary_section}
-
-<section id="experience">
-  <h2>Professional Experience</h2>
-  {experience_html}
-</section>
-
-{projects_section}
-
-{skills_section}
-
+{body_html}
 </body>
-</html>
-"""
+</html>"""
+
+# Alias for backward compatibility
+RESUME_HTML_TEMPLATE = _build_html_document(RESUME_CSS_MODERN, "{body}")
 
 
 class ResumeService:
@@ -177,6 +531,7 @@ class ResumeService:
         user_id: str,
         db: Session,
         lens: str | None = None,
+        template: str = "modern",
         top_experience_nodes: int = 6,
         top_projects: int = 3,
     ) -> dict[str, Any]:
@@ -187,7 +542,7 @@ class ResumeService:
         2. Detects or uses specified lens.
         3. Retrieves top matching experience nodes & projects for the JD.
         4. Replaces original raw_text with refracted bullet points when available.
-        5. Formats structured HTML and saves to `resume_outputs`.
+        5. Formats structured HTML according to the selected styling template and saves to `resume_outputs`.
         """
         user = db.query(User).filter(User.id == user_id).first()
         if not user:
@@ -199,7 +554,7 @@ class ResumeService:
 
         # Choose lens
         selected_lens = lens or refraction_service._auto_select_lens(jd_session.keywords or [])
-        logger.info(f"Generating resume for user={user_id}, session={jd_session_id}, lens={selected_lens}")
+        logger.info(f"Generating resume for user={user_id}, session={jd_session_id}, lens={selected_lens}, template={template}")
 
         # Find top matching nodes
         relevant_nodes = jd_service.find_relevant_nodes(
@@ -259,6 +614,7 @@ class ResumeService:
             projects=projects_query,
             skills=skills_records,
             selected_lens=selected_lens,
+            template=template,
         )
 
         # Save to resume_outputs
@@ -278,6 +634,7 @@ class ResumeService:
             "user_id": str(user.id),
             "jd_session_id": jd_session_id,
             "lens": selected_lens,
+            "template": template,
             "nodes_count": len(used_node_uuids),
             "projects_count": len(used_project_uuids),
             "final_content": html_content,
@@ -291,8 +648,9 @@ class ResumeService:
         projects: list[Project],
         skills: list[SkillsProfile],
         selected_lens: str | None = None,
+        template: str = "modern",
     ) -> str:
-        """Render the complete resume HTML document."""
+        """Render the complete resume HTML document using the specified template."""
         personal_info = user.personal_info or {}
         name = personal_info.get("name", "Software Engineer")
         label = personal_info.get("label", "")
@@ -398,15 +756,89 @@ class ResumeService:
             </section>
             """
 
-        return RESUME_HTML_TEMPLATE.format(
-            name=name,
-            label_html=label_html,
-            contact_items=contact_items,
-            summary_section=summary_section,
-            experience_html=experience_html,
-            projects_section=projects_section,
-            skills_section=skills_section,
+        exp_title = (
+            "Executive Experience"
+            if template.lower() == "executive"
+            else "Experience"
+            if template.lower() in ("classic", "minimal")
+            else "Professional Experience"
         )
+
+        body_html = f"""
+<header>
+  <h1>{name}</h1>
+  {label_html}
+  <div class="contact-bar">
+    {contact_items}
+  </div>
+</header>
+
+{summary_section}
+
+<section id="experience">
+  <h2>{exp_title}</h2>
+  {experience_html}
+</section>
+
+{projects_section}
+
+{skills_section}
+"""
+        css = RESUME_CSS_TEMPLATES.get(template.lower(), RESUME_CSS_TEMPLATES["modern"])
+        return _build_html_document(css, body_html)
+
+    def re_render_resume_template(
+        self,
+        resume_id: str,
+        template: str,
+        db: Session,
+    ) -> str:
+        """Re-render an existing resume with a newly selected style template."""
+        resume = db.query(ResumeOutput).filter(ResumeOutput.id == resume_id).first()
+        if not resume:
+            raise ValueError(f"Resume not found: {resume_id}")
+
+        user = db.query(User).filter(User.id == resume.user_id).first()
+        if not user:
+            raise ValueError(f"User not found: {resume.user_id}")
+
+        # Fetch nodes
+        nodes = []
+        if resume.experience_node_ids:
+            nodes = db.query(ExperienceNode).filter(ExperienceNode.id.in_(resume.experience_node_ids)).all()
+
+        # Group experience
+        grouped_exp: dict[str, dict[str, Any]] = {}
+        for node in nodes:
+            key = f"{node.company}::{node.role}"
+            if key not in grouped_exp:
+                grouped_exp[key] = {
+                    "company": node.company,
+                    "role": node.role,
+                    "duration": node.duration or "",
+                    "bullets": [],
+                }
+            grouped_exp[key]["bullets"].append(node.raw_text)
+
+        # Projects
+        projects = []
+        if resume.project_ids:
+            projects = db.query(Project).filter(Project.id.in_(resume.project_ids)).all()
+
+        # Skills
+        skills = db.query(SkillsProfile).filter(SkillsProfile.user_id == user.id).all()
+
+        new_html = self.render_html(
+            user=user,
+            grouped_experience=list(grouped_exp.values()),
+            projects=projects,
+            skills=skills,
+            template=template,
+        )
+
+        resume.final_content = new_html
+        db.commit()
+        return new_html
 
     def render_pdf(self, html_content: str) -> bytes:
         """Render HTML string to PDF bytes using WeasyPrint with pure-Python fallback."""

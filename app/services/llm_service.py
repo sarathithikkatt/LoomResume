@@ -71,12 +71,17 @@ class LLMService:
             system_prompt=(system_prompt or "") + "\n\nRespond ONLY with valid JSON. No markdown, no explanation.",
             temperature=temperature,
         )
-        # Strip markdown code fences if present
+        # Robustly extract JSON from response
         cleaned = raw.strip()
-        if cleaned.startswith("```"):
-            # Remove first line (```json) and last line (```)
-            lines = cleaned.split("\n")
-            cleaned = "\n".join(lines[1:-1])
+        if "```json" in cleaned:
+            cleaned = cleaned.split("```json", 1)[1].split("```", 1)[0].strip()
+        elif "```" in cleaned:
+            cleaned = cleaned.split("```", 1)[1].split("```", 1)[0].strip()
+        else:
+            start = cleaned.find("{")
+            end = cleaned.rfind("}")
+            if start != -1 and end != -1 and end > start:
+                cleaned = cleaned[start : end + 1].strip()
         return json.loads(cleaned)
 
 

@@ -139,7 +139,7 @@ export const api = {
     return res.json();
   },
 
-  async triggerIngest(): Promise<any> {
+  async triggerIngest(): Promise<Record<string, unknown>> {
     const res = await fetch(`${API_BASE}/ingest/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -178,13 +178,138 @@ export const api = {
     return res.json();
   },
 
-  async generateResume(sessionId: string, userId: string, lens?: string): Promise<ResumeData> {
+  async generateResume(
+    sessionId: string,
+    userId: string,
+    lens?: string,
+    template: string = "modern"
+  ): Promise<ResumeData> {
     const res = await fetch(`${API_BASE}/resume/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jd_session_id: sessionId, user_id: userId, lens }),
+      body: JSON.stringify({ jd_session_id: sessionId, user_id: userId, lens, template }),
     });
     if (!res.ok) throw new Error("Resume generation failed");
+    return res.json();
+  },
+
+  async switchResumeTemplate(resumeId: string, template: string): Promise<{ resume_id: string; final_content: string }> {
+    const res = await fetch(`${API_BASE}/resume/${resumeId}/template`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ template }),
+    });
+    if (!res.ok) throw new Error("Failed to switch resume template");
+    return res.json();
+  },
+
+  async createNode(data: {
+    company: string;
+    role: string;
+    duration?: string;
+    raw_text: string;
+    tags?: string[];
+  }): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/nodes`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to create experience node");
+    return res.json();
+  },
+
+  async updateNode(
+    nodeId: string,
+    data: {
+      company?: string;
+      role?: string;
+      duration?: string;
+      raw_text?: string;
+      tags?: string[];
+    }
+  ): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/nodes/${nodeId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to update experience node");
+    return res.json();
+  },
+
+  async deleteNode(nodeId: string): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/nodes/${nodeId}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error("Failed to delete experience node");
+    return res.json();
+  },
+
+  async createSkill(data: { skill_name: string; category?: string }): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/skills`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to add skill");
+    return res.json();
+  },
+
+  async deleteSkill(skillId: string): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/skills/${skillId}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error("Failed to delete skill");
+    return res.json();
+  },
+
+  async createProject(data: { name: string; description: string; tags?: string[] }): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/projects`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to create project");
+    return res.json();
+  },
+
+  async updateProject(
+    projectId: string,
+    data: { name?: string; description?: string; tags?: string[] }
+  ): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/projects/${projectId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to update project");
+    return res.json();
+  },
+
+  async deleteProject(projectId: string): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/projects/${projectId}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error("Failed to delete project");
+    return res.json();
+  },
+
+  async updateProfile(data: {
+    name?: string;
+    label?: string;
+    phone?: string;
+    location?: string;
+    linkedin?: string;
+    github?: string;
+    summary?: string;
+  }): Promise<any> {
+    const res = await fetch(`${API_BASE}/ingest/profile`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to update profile");
     return res.json();
   },
 

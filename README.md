@@ -313,6 +313,15 @@ docker-compose up -d --build
 | :--- | :--- | :--- |
 | `POST` | `/api/v1/ingest/` | Trigger profile ingestion from `data/master_profile.json` |
 | `GET` | `/api/v1/ingest/vault` | Retrieve the entire career vault (user, experience nodes, projects, skills) |
+| `POST` | `/api/v1/ingest/nodes` | Create an experience node with auto-embedding vector generation |
+| `PUT` | `/api/v1/ingest/nodes/{node_id}` | Update experience node and refresh vector embedding |
+| `DELETE` | `/api/v1/ingest/nodes/{node_id}` | Remove an experience node from the vault |
+| `POST` | `/api/v1/ingest/skills` | Add a new skill to the candidate profile |
+| `DELETE` | `/api/v1/ingest/skills/{skill_id}` | Remove a skill from the profile |
+| `POST` | `/api/v1/ingest/projects` | Add a project with auto-embedding vector generation |
+| `PUT` | `/api/v1/ingest/projects/{project_id}` | Update project description and refresh embedding |
+| `DELETE` | `/api/v1/ingest/projects/{project_id}` | Remove a project from the vault |
+| `PUT` | `/api/v1/ingest/profile` | Update user summary and contact details |
 
 ### 2. Job Description (JD) Matching
 | Method | Endpoint | Description |
@@ -331,8 +340,9 @@ docker-compose up -d --build
 ### 4. Resume & PDF Generation
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `POST` | `/api/v1/resume/generate` | Compile tailored ATS resume HTML for a JD session and lens |
+| `POST` | `/api/v1/resume/generate` | Compile tailored ATS resume HTML for a JD session, lens, and style template |
 | `GET` | `/api/v1/resume/{resume_id}` | Fetch stored resume HTML content and metadata |
+| `POST` | `/api/v1/resume/{resume_id}/template` | Re-render existing tailored resume under another style template |
 | `GET` | `/api/v1/resume/{resume_id}/pdf` | Download rendered PDF version of the resume |
 | `POST` | `/api/v1/resume/render-pdf` | Directly compile any raw HTML into PDF binary |
 

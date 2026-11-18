@@ -11,6 +11,7 @@ from app.schemas.schemas import (
     ResumeGenerateRequest,
     ResumeGenerateResponse,
     ResumeRenderPDFRequest,
+    ResumeSwitchTemplateRequest,
 )
 from app.services.resume_service import resume_service
 
@@ -25,13 +26,14 @@ async def generate_resume(
     db: Session = Depends(get_db),
 ):
     """Generate a tailored resume matching a Job Description session and selected lens."""
-    logger.info(f"Resume generate request: user={req.user_id}, session={req.jd_session_id}")
+    logger.info(f"Resume generate request: user={req.user_id}, session={req.jd_session_id}, template={req.template}")
     try:
         result = await resume_service.generate_resume_for_jd(
             jd_session_id=req.jd_session_id,
             user_id=req.user_id,
             db=db,
             lens=req.lens,
+            template=req.template,
             top_experience_nodes=req.top_experience_nodes,
             top_projects=req.top_projects,
         )
@@ -40,6 +42,34 @@ async def generate_resume(
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.error(f"Resume generation failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/{resume_id}/template", tags=["Resume"], response_model=ResumeDetailResponse)
+def switch_resume_template(
+    resume_id: str,
+    req: ResumeSwitchTemplateRequest,
+    db: Session = Depends(get_db),
+):
+    """Re-render an existing resume with a different styling template."""
+    logger.info(f"Switch resume template request: id={resume_id}, template={req.template}")
+    try:
+        new_html = resume_service.re_render_resume_template(
+            resume_id=resume_id,
+            template=req.template,
+            db=db,
+        )
+        record = db.query(ResumeOutput).filter(ResumeOutput.id == resume_id).first()
+        return ResumeDetailResponse(
+            resume_id=str(record.id),
+            user_id=str(record.user_id),
+            final_content=new_html,
+            created_at=record.created_at.isoformat() if record.created_at else None,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Switching resume template failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
