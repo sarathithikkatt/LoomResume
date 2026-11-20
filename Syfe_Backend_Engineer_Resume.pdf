@@ -1,0 +1,79 @@
+%PDF-1.7
+%🖤
+1 0 obj
+<</Type /Pages/Kids [3 0 R]/Count 1>>
+endobj
+2 0 obj
+<</Type /Catalog/Pages 1 0 R>>
+endobj
+3 0 obj
+<</Length 1458>>
+stream
+BT /F1 10 Tf 50 750 Td
+(@page {) Tj 0 -14 Td
+(size: letter;) Tj 0 -14 Td
+(margin: 0.55in 0.6in;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(* {) Tj 0 -14 Td
+(box-sizing: border-box;) Tj 0 -14 Td
+(margin: 0;) Tj 0 -14 Td
+(padding: 0;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(body {) Tj 0 -14 Td
+(font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;) Tj 0 -14 Td
+(color: #1a1a1a;) Tj 0 -14 Td
+(line-height: 1.4;) Tj 0 -14 Td
+(font-size: 10pt;) Tj 0 -14 Td
+(background: #ffffff;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(header {) Tj 0 -14 Td
+(text-align: center;) Tj 0 -14 Td
+(border-bottom: 2px solid #2b2b2b;) Tj 0 -14 Td
+(padding-bottom: 8px;) Tj 0 -14 Td
+(margin-bottom: 12px;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(h1 {) Tj 0 -14 Td
+(font-size: 20pt;) Tj 0 -14 Td
+(font-weight: 700;) Tj 0 -14 Td
+(letter-spacing: -0.5px;) Tj 0 -14 Td
+(color: #111827;) Tj 0 -14 Td
+(text-transform: uppercase;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(.headline {) Tj 0 -14 Td
+(font-size: 11pt;) Tj 0 -14 Td
+(font-weight: 600;) Tj 0 -14 Td
+(color: #374151;) Tj 0 -14 Td
+(margin-top: 2px;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(.contact-bar {) Tj 0 -14 Td
+(margin-top: 5px;) Tj 0 -14 Td
+(font-size: 9pt;) Tj 0 -14 Td
+(color: #4b5563;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(.contact-bar span {) Tj 0 -14 Td
+(margin: 0 6px;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(.contact-bar a {) Tj 0 -14 Td
+(color: #1d4ed8;) Tj 0 -14 Td
+(text-decoration: none;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+(section {) Tj 0 -14 Td
+(margin-bottom: 12px;) Tj 0 -14 Td
+(}) Tj 0 -14 Td
+ET
+endstream
+endobj
+xref
+0 4
+0000000000 65535 f 
+0000000015 00000 n 
+0000000068 00000 n 
+0000000114 00000 n 
+trailer
+<<
+/Size 4
+/Root 2 0 R
+>>
+startxref
+1622
+%%EOF

@@ -9,10 +9,12 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%20%2B%20pgvector-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 ![LiteLLM](https://img.shields.io/badge/LiteLLM-Multi--Provider-purple?style=for-the-badge)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-Chromium--PDF-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
+![Pytest](https://img.shields.io/badge/Pytest-3--Phase%20E2E-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
 
-**An AI-powered career identity platform that transforms your raw engineering achievements into verified, high-impact narratives tailored for target job roles with anti-hallucination guardrails.**
+**An AI-powered career identity platform that transforms your raw engineering achievements into verified, high-impact narratives tailored for target job roles with anti-hallucination guardrails, multi-template ATS resume rendering, and career gap-filler agents.**
 
-[Key Features](#-key-features) • [Architecture](#-architecture) • [Tech Stack](#-tech-stack) • [Quick Start](#-quick-start) • [API Reference](#-api-reference) • [Frontend Studio](#-frontend-studio) • [Testing](#-testing--quality)
+[Key Features](#-key-features) • [Architecture](#-architecture) • [Multi-Template Resume Engine](#-multi-template-ats-resume-engine) • [Interactive Vault Studio](#-interactive-experience-vault-studio) • [3-Phase E2E Verification](#-3-phase-end-to-end-verification) • [Quick Start](#-quick-start) • [API Reference](#-api-reference) • [Frontend Studio](#-frontend-studio)
 
 </div>
 
@@ -20,14 +22,15 @@
 
 ## 💡 Why LoomResume?
 
-Most AI resume builders treat resumes as static text, prompting LLMs to generate bullets from scratch. This leads to **hallucinated metrics, invented technologies, and generic summaries** that recruiters and ATS systems easily spot.
+Most AI resume builders treat resumes as disposable text prompts, asking LLMs to invent bullet points from scratch. This introduces **hallucinated metrics, invented technologies, and generic summaries** that fail recruiter screens and automated ATS checks.
 
 **LoomResume takes an engineer's database approach:**
-1. **Source of Truth:** Treats your career history as a persistent, verified semantic database (Experience Vault).
-2. **Anti-Hallucination Guardrails:** Reframes achievements across distinct engineering lenses (Platform, Infrastructure, Leadership, Business Impact, Data Engineering, Security) while enforcing strict factual token preservation and character bounds.
-3. **Hybrid JD Matching:** Computes a 60/40 hybrid score (60% dense vector similarity + 40% lexical ATS keyword matching) to identify skill gaps accurately.
-4. **Deterministic Resume Assembly:** Renders tailored, ATS-compliant HTML and vector-crisp PDF resumes.
-5. **Actionable Career Agents:** Automatically architects production-grade gap-filler projects and scenario-based technical interview preparations for missing skills.
+1. **Persistent Source of Truth:** Treats your career history as a verified semantic database (Experience Vault) with 768-dimensional dense vector embeddings in PostgreSQL `pgvector`.
+2. **Anti-Hallucination Guardrails:** Reframes achievements across 6 specialized engineering lenses (Platform, Infrastructure, Leadership, Business Impact, Data Engineering, Security) while enforcing strict factual token preservation, character bounds, and word-level sequence diff auditing.
+3. **Calibrated Hybrid JD Matching:** Computes a 60/40 hybrid score (60% dense cosine vector similarity + 40% lexical ATS keyword matching) to identify exact competency overlaps and missing skill gaps.
+4. **Multi-Template ATS Resume Engine:** Compiles and renders tailored resumes across 4 professionally engineered ATS design templates (**Modern**, **Classic**, **Minimal**, **Executive**) with real-time template switching and dual PDF export pipelines (WeasyPrint and headless Playwright Chromium).
+5. **Interactive Vault Studio:** Full CRUD capabilities allowing engineers to create, update, and prune experience nodes, skills, and projects with automated live vector re-indexing.
+6. **Actionable Career Agents:** Automatically architects production-grade gap-filler project blueprints and scenario-based technical interview questions for any identified skill gaps.
 
 ---
 
@@ -35,40 +38,41 @@ Most AI resume builders treat resumes as static text, prompting LLMs to generate
 
 ```mermaid
 flowchart TD
-    subgraph UI ["Frontend Studio (Next.js 16 + React 19)"]
-        FE_Vault["Vault Explorer"]
+    subgraph UI ["Frontend Studio (Next.js 16 + React 19 + Tailwind CSS v4)"]
+        FE_Vault["Vault Explorer & Interactive CRUD Editor"]
         FE_JD["JD Match & Scoring Studio"]
         FE_Refract["Role Refraction & Diff Viewer"]
-        FE_Resume["Tailored Resume & PDF Studio"]
+        FE_Resume["Tailored Resume & Multi-Template PDF Studio"]
         FE_Agents["Gap Projects & Mock Interview Lab"]
         FE_Chat["Identity Assistant Chat"]
     end
 
     subgraph API ["Backend API (FastAPI + Pydantic v2)"]
-        Router_Ingest["/api/v1/ingest"]
-        Router_JD["/api/v1/jd"]
-        Router_Refract["/api/v1/refraction"]
-        Router_Resume["/api/v1/resume"]
-        Router_Agents["/api/v1/agents"]
-        Router_Chat["/api/v1/chat"]
+        Router_Ingest["/api/v1/ingest\n(Ingest, CRUD Vault Nodes, Skills, Projects)"]
+        Router_JD["/api/v1/jd\n(Analyze, 60/40 Score, Ranked Matches)"]
+        Router_Refract["/api/v1/refraction\n(Single/Batch Refract, Token Diff Audit)"]
+        Router_Resume["/api/v1/resume\n(Generate, Hot-Swap Template, PDF Export)"]
+        Router_Agents["/api/v1/agents\n(Gap Project Architect, Mock Interview)"]
+        Router_Chat["/api/v1/chat\n(Grounded Identity Assistant)"]
     end
 
     subgraph Engines ["Core Business Engines"]
-        DiffEngine["Anti-Hallucination Diff Engine\n(SequenceMatcher + Token Auditing)"]
+        DiffEngine["Anti-Hallucination Diff Engine\n(SequenceMatcher + Token Auditing + Self-Healing)"]
         MatchEngine["Hybrid Matching Engine\n(60% Vector Cosine + 40% Lexical ATS)"]
-        ResumeCompiler["Resume Template Compiler\n& WeasyPrint PDF Renderer"]
+        ResumeCompiler["Resume Template Compiler\n(Modern, Classic, Minimal, Executive)"]
+        PDFPipeline["Dual PDF Generation Pipeline\n(WeasyPrint Server-Side + Playwright Headless)"]
         AgentEngine["Gap Architect & Mock Interviewer"]
     end
 
     subgraph AI_Layer ["AI / LLM Layer (LiteLLM)"]
         OllamaLocal["Local Ollama\n(llama3.1:8b)"]
         CloudLLM["Cloud LLMs\n(OpenAI / Anthropic / Grok)"]
-        Embedder["Embedding Engine\n(nomic-embed-text / OpenAI 768d)"]
+        Embedder["Dense Embedding Engine\n(nomic-embed-text / OpenAI 768d)"]
     end
 
     subgraph Storage ["Persistent Database"]
         PG["PostgreSQL 16 + pgvector"]
-        PG_Tables["• users\n• experience_nodes (HNSW)\n• projects\n• skills_profile\n• refractions\n• jd_sessions\n• resume_outputs"]
+        PG_Tables["• users\n• experience_nodes (HNSW Index)\n• projects\n• skills_profile\n• refractions\n• jd_sessions\n• resume_outputs"]
     end
 
     UI -->|REST / JSON| API
@@ -76,12 +80,14 @@ flowchart TD
     Router_JD --> MatchEngine
     Router_Refract --> DiffEngine
     Router_Resume --> ResumeCompiler
+    Router_Resume --> PDFPipeline
     Router_Agents --> AgentEngine
 
     MatchEngine --> Embedder
     DiffEngine --> AI_Layer
     AgentEngine --> AI_Layer
     ResumeCompiler --> PG
+    PDFPipeline --> PG
 
     Embedder --> PG
     AI_Layer --> OllamaLocal
@@ -93,20 +99,21 @@ flowchart TD
 
 ## 🚀 Key Features
 
-### 1. 🗄️ The Experience Vault
-* Persistent career vault storing verified achievements, responsibilities, projects, and skills.
-* Ingestion pipeline parses structured career data (`master_profile.json`), chunks experience bullets, and generates 768-dimensional dense vector embeddings with HNSW indexing in PostgreSQL `pgvector`.
-* Immediate exploration through the `/api/v1/ingest/vault` endpoint and frontend Vault Explorer.
+### 1. 🗄️ The Experience Vault & Live CRUD Editor
+* **Persistent Career Vault:** Stores verified achievements, responsibilities, projects, and skills.
+* **Vector Embeddings & HNSW:** Ingestion parses structured career data (`master_profile.json`), chunks experience bullets, and generates 768-dimensional dense vector embeddings with HNSW indexing in PostgreSQL `pgvector`.
+* **Live Interactive Management:** Full programmatic and UI-based CRUD operations to add, update, or delete experience nodes, skills, and projects on the fly with automatic vector embedding re-generation.
+* **Profile Metadata Updates:** Modify professional summaries, contact information, and target titles with instant database synchronization.
 
 ### 2. 🎯 Job Description (JD) Analysis & Hybrid Matching
-* Extracts technical skills, seniority level, domain requirements, and key competencies from raw JD text.
-* Generates a JD embedding and stores the search session.
-* Evaluates candidate fit using a calibrated **Hybrid Match Score**:
+* **Semantic & Keyword Extraction:** Extracts technical skills, seniority level, domain requirements, and key competencies from raw job descriptions.
+* **60/40 Hybrid Scoring Algorithm:** Evaluates candidate fit using a calibrated formula:
   $$\text{Match Score} = 0.60 \times \text{CosineSimilarity}(\vec{E}_{\text{JD}}, \vec{E}_{\text{Experience}}) + 0.40 \times \text{LexicalOverlap}(\text{Keywords})$$
-* Returns ranked experience nodes alongside granular **present keywords** vs. **missing keyword gaps**.
+* **Ranked Experience Alignment:** Returns ranked experience nodes matching the JD alongside an itemized breakdown of **matched keywords** versus **missing keyword gaps**.
 
 ### 3. 🔮 Anti-Hallucination Role Refraction
-Pivots raw technical achievements across **6 specialized lenses**:
+Reframes raw technical achievements across **6 specialized engineering lenses** without hallucinating unearned qualifications:
+
 | Lens | Core Focus | Example Narrative Pivot |
 | :--- | :--- | :--- |
 | **Platform** | Developer platforms, internal tooling, scalability, distributed systems | Emphasizes SDK design, internal API adoption, developer experience, and RPC throughput. |
@@ -122,16 +129,54 @@ Pivots raw technical achievements across **6 specialized lenses**:
 - **Diff Service:** Runs `difflib.SequenceMatcher` to generate word-level diffs, tracking additions, modifications, and deletions.
 - **Self-Healing Loop:** Automatically retries up to 3 times with explicit correction prompts if factual tokens are omitted or ungrounded assertions are detected.
 
-### 4. 📄 Tailored ATS Resume & Vector PDF Generation
-* Compiles top-ranked experience nodes, refracted bullets, projects, and skills matching the target JD session.
-* Renders semantic, clean HTML formatted according to modern ATS parsing standards.
-* Generates downloadable vector PDFs using **WeasyPrint** (with pure-Python fallback support).
-* Offers a direct `/api/v1/resume/render-pdf` endpoint to convert custom HTML into PDF on the fly.
+---
 
-### 5. 🧠 Career Agents
-* **Gap-Filler Project Architect:** Examines missing skills identified in JD analysis and designs a production-grade project blueprint complete with architecture, tech stack, and step-by-step implementation phases.
-* **Scenario Mock Interviewer:** Generates tough, scenario-based system design and technical interview questions based on the candidate's refracted background and the target JD.
-* **Loom Identity Chat Assistant:** Context-aware chatbot grounded with the user's complete profile, achievements, and career identity.
+## 🎨 Multi-Template ATS Resume Engine
+
+LoomResume features a decoupled resume compilation architecture that formats candidate data into 4 distinct ATS-compliant design templates:
+
+| Template | Typography | Best Suited For | Key Aesthetic |
+| :--- | :--- | :--- | :--- |
+| **`modern`** | Sans-Serif (Helvetica / Arial) | Software Engineers, Tech Leads, Cloud Architects | Clean horizontal dividers, bold role titles, balanced margins (0.55in), high scannability. |
+| **`classic`** | Serif (Georgia / Times) | Finance, Fintech, Enterprise, Traditional Engineering | Traditional academic typography, subtle dividers, refined hierarchy, elegant print balance. |
+| **`minimal`** | Clean Sans-Serif + Monospace Meta | Senior ICs, Systems Programmers, Infrastructure Engineers | Tight margins (0.45in), monospaced contact/metadata line, maximum information density. |
+| **`executive`** | Slate-Accent Sans-Serif | Staff/Principal Engineers, Engineering Directors | Subtle accent underlines, distinct section titling, prominent leadership metrics. |
+
+### Dynamic Template Hot-Swapping
+Switch templates without re-running LLM generation:
+```http
+POST /api/v1/resume/{resume_id}/template
+Content-Type: application/json
+
+{
+  "template": "classic"
+}
+```
+The resume engine re-renders the document using the target layout and returns updated HTML and compiled PDF payloads instantaneously.
+
+### Dual PDF Generation Pipeline
+1. **Server-Side Rendering (WeasyPrint):** Built-in headless HTML-to-PDF rendering directly inside FastAPI with pure-Python fallback.
+2. **Precision Browser-Grade Rendering (Playwright):** Dedicated single-page PDF compiler (`build_resumes.py`) running headless Chromium with custom CSS print page bounds (`@page { size: letter; margin: 0.35in 0.45in; }`) for sub-millimeter layout guarantees and strict 1-page constraints.
+
+---
+
+## 🧪 3-Phase End-to-End Verification
+
+LoomResume incorporates an automated 3-phase verification test suite (`tests/run_e2e_verification.py` and `tests/test_e2e_comprehensive.py`):
+
+```mermaid
+flowchart LR
+    P1["Phase 1: Component E2E\n• Config & DB Engine\n• Ingest & Auto-Embed\n• Hybrid JD Matching\n• Lens Refraction\n• Resume & PDF\n• Agents & Chat"]
+    P2["Phase 2: Interconnectivity\n• Ingest ➔ PG Vector\n• JD Matcher ➔ Refractor\n• Refractor ➔ Resume Engine\n• Resume ➔ Template Switcher\n• Agents ➔ LLM Router"]
+    P3["Phase 3: Candidate Journey\n• User Bootstrap\n• Full Profile Ingestion\n• Target JD Matching\n• Guardrailed Refraction\n• Multi-Template PDF Export\n• Gap Project Blueprint"]
+
+    P1 --> P2 --> P3
+```
+
+Run the complete verification suite anytime:
+```bash
+python tests/run_e2e_verification.py
+```
 
 ---
 
@@ -144,10 +189,10 @@ Pivots raw technical achievements across **6 specialized lenses**:
 | **Embeddings** | **LangChain / nomic-embed-text** | 768-dimensional dense semantic vectors |
 | **Vector Database** | **PostgreSQL 16 + pgvector** | HNSW cosine distance indexing and relational tables |
 | **ORM & Migrations** | **SQLAlchemy 2.0 & Alembic** | Schema management and SQL migration scripts |
-| **PDF Engine** | **WeasyPrint / pydyf** | Pixel-perfect ATS PDF compilation from HTML/CSS |
+| **PDF Engines** | **WeasyPrint & Playwright (Chromium)** | Dual-engine pixel-perfect ATS PDF compilation |
 | **Frontend Framework** | **Next.js 16 (App Router)** | Modern React 19 UI with Server and Client components |
-| **Styling & Icons** | **Tailwind CSS v4 & Lucide React** | Dark-mode developer studio design |
-| **Testing & Quality** | **Pytest, Ruff, Black, Mypy** | Comprehensive test coverage, linting, formatting, and strict typing |
+| **Styling & Components** | **Tailwind CSS v4 & Lucide React** | Dark-mode developer studio design |
+| **Testing & Quality** | **Pytest, Ruff, Black, Mypy** | 3-phase verification, strict typing, and linting |
 
 ---
 
@@ -157,7 +202,7 @@ Pivots raw technical achievements across **6 specialized lenses**:
 LoomResume/
 ├── app/
 │   ├── ai/                      # AI agents, prompt templates, and chains
-│   │   ├── agents/              # Career agent definitions
+│   │   ├── agents/              # Career agent definitions (Gap project & interview)
 │   │   ├── embeddings/          # Vector embedding generators
 │   │   └── prompts/             # Refraction and persona prompt templates
 │   ├── api/
@@ -165,10 +210,10 @@ LoomResume/
 │   │       ├── agents.py        # Gap-filler and mock interview endpoints
 │   │       ├── chats.py         # Identity chat assistant
 │   │       ├── health.py        # Health and database connectivity checks
-│   │       ├── ingest.py        # Vault ingestion and profile inspector
-│   │       ├── jd.py            # JD extraction and hybrid matching
+│   │       ├── ingest.py        # Vault ingestion, profile updates, and CRUD endpoints
+│   │       ├── jd.py            # JD extraction and 60/40 hybrid matching
 │   │       ├── refraction.py    # Multi-lens refraction and diff auditing
-│   │       └── resume.py        # Tailored resume compiler & PDF generation
+│   │       └── resume.py        # Multi-template resume compiler & PDF generation
 │   ├── core/                    # App configuration, logging, and DB engine
 │   ├── db/                      # SQLAlchemy models and schema definitions
 │   ├── schemas/                 # Pydantic v2 validation models
@@ -180,7 +225,7 @@ LoomResume/
 │   │   ├── jd_service.py        # JD parser & 60/40 hybrid scoring
 │   │   ├── llm_service.py       # LiteLLM client wrapper
 │   │   ├── refraction_service.py# Lens refraction & self-healing retry loop
-│   │   ├── resume_service.py    # HTML assembly & WeasyPrint PDF renderer
+│   │   ├── resume_service.py    # HTML assembly (4 templates) & PDF renderer
 │   │   └── retrieval_service.py # Vector similarity search
 │   └── main.py                  # FastAPI application entry point
 ├── frontend/                    # Next.js 16 Frontend Studio
@@ -192,13 +237,17 @@ LoomResume/
 ├── migrations/                  # 10 Ordered SQL schema migrations
 ├── data/
 │   └── master_profile.json      # Master career profile source of truth
-├── tests/                       # Pytest test suite
+├── tests/                       # Comprehensive test suite
+│   ├── run_e2e_verification.py  # 3-Phase E2E test runner
+│   ├── test_e2e_comprehensive.py# Comprehensive Pytest E2E suite
+│   ├── test_vault_endpoints.py  # Vault CRUD API tests
+│   ├── test_resume_service.py   # Multi-template HTML/PDF compilation tests
 │   ├── test_diff_service.py     # Factual token preservation & diff tests
-│   ├── test_resume_service.py   # HTML/PDF compilation tests
 │   └── test_retrieval_service.py# Vector matching & scoring tests
+├── build_resumes.py             # Playwright Chromium high-fidelity 1-page PDF builder
 ├── docker-compose.yml           # PostgreSQL + pgvector & App orchestration
 ├── Dockerfile                   # Production Python 3.13 container
-├── pyproject.toml               # Poetry/pip build configuration & tool configs
+├── pyproject.toml               # Build configuration, dependencies, & tool configs
 └── .env.example                 # Environment configuration template
 ```
 
@@ -226,7 +275,6 @@ cp .env.example .env
 ```
 
 #### 2. Start PostgreSQL with pgvector
-You can run just the database using Docker Compose:
 ```bash
 docker-compose up -d db
 ```
@@ -246,7 +294,7 @@ pip install -e .[dev]
 ```
 
 #### 4. Run Database Migrations
-Apply the migrations using Alembic or execute the SQL scripts in `migrations/`:
+Apply migrations using Alembic:
 ```bash
 alembic upgrade head
 ```
@@ -275,7 +323,21 @@ npm run dev
 
 ---
 
-### Option B: Full Docker Compose Setup
+### Option B: Standalone Resume Generation with Playwright
+
+To compile single-page, ATS-optimized vector resumes directly to HTML and PDF using the Playwright browser compiler:
+```bash
+# Ensure Playwright chromium is installed
+playwright install chromium
+
+# Run the build script
+python build_resumes.py
+```
+This generates pixel-perfect targeted resumes (`Frontend`, `FullStack`, `Fintech`) with sub-millimeter print margin accuracy.
+
+---
+
+### Option C: Full Docker Compose Setup
 
 Run both the database and the FastAPI backend in isolated containers:
 ```bash
@@ -284,50 +346,28 @@ docker-compose up -d --build
 
 ---
 
-## ⚙️ Configuration (.env)
-
-| Variable | Default Value | Description |
-| :--- | :--- | :--- |
-| `POSTGRES_USER` | `postgres` | Database username |
-| `POSTGRES_PASSWORD` | `password` | Database password |
-| `POSTGRES_DB` | `loom_resume` | Database name |
-| `POSTGRES_HOST` | `localhost` | Database host (`db` inside Docker network) |
-| `POSTGRES_PORT` | `5432` | Database port |
-| `DATABASE_URL` | `postgresql://...` | Full SQLAlchemy connection string |
-| `LLM_DEFAULT_PROVIDER` | `ollama` | Default LLM provider (`ollama`, `openai`, `anthropic`, `grok`) |
-| `LLM_DEFAULT_MODEL` | `ollama/llama3.1:8b`| LiteLLM model identifier (`gpt-4o`, `claude-3-5-sonnet-20241022`, etc.) |
-| `OLLAMA_API_BASE` | `http://localhost:11434` | Ollama service base URL |
-| `EMBEDDING_PROVIDER` | `auto` | Vector embedding engine (`auto`, `ollama`, or `openai`) |
-| `OLLAMA_EMBEDDING_MODEL`| `nomic-embed-text` | Ollama embedding model name |
-| `EMBEDDING_DIMENSIONS` | `768` | Embedding dimensionality (768 for nomic, 1536 for OpenAI) |
-| `OPENAI_API_KEY` | *optional* | API Key for OpenAI models |
-| `ANTHROPIC_API_KEY` | *optional* | API Key for Anthropic Claude models |
-| `LOG_LEVEL` | `INFO` | Console log verbosity (`DEBUG`, `INFO`, `WARNING`, `ERROR`) |
-
----
-
 ## 📡 API Reference
 
-### 1. Ingestion & Vault
+### 1. Ingestion & Experience Vault Management
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/api/v1/ingest/` | Trigger profile ingestion from `data/master_profile.json` |
 | `GET` | `/api/v1/ingest/vault` | Retrieve the entire career vault (user, experience nodes, projects, skills) |
-| `POST` | `/api/v1/ingest/nodes` | Create an experience node with auto-embedding vector generation |
-| `PUT` | `/api/v1/ingest/nodes/{node_id}` | Update experience node and refresh vector embedding |
+| `POST` | `/api/v1/ingest/nodes` | Create an experience node with automatic 768-d vector embedding |
+| `PUT` | `/api/v1/ingest/nodes/{node_id}` | Update experience node text and refresh vector embedding |
 | `DELETE` | `/api/v1/ingest/nodes/{node_id}` | Remove an experience node from the vault |
 | `POST` | `/api/v1/ingest/skills` | Add a new skill to the candidate profile |
 | `DELETE` | `/api/v1/ingest/skills/{skill_id}` | Remove a skill from the profile |
 | `POST` | `/api/v1/ingest/projects` | Add a project with auto-embedding vector generation |
-| `PUT` | `/api/v1/ingest/projects/{project_id}` | Update project description and refresh embedding |
+| `PUT` | `/api/v1/ingest/projects/{project_id}` | Update project description and refresh vector embedding |
 | `DELETE` | `/api/v1/ingest/projects/{project_id}` | Remove a project from the vault |
-| `PUT` | `/api/v1/ingest/profile` | Update user summary and contact details |
+| `PUT` | `/api/v1/ingest/profile` | Update user personal details, summary, and headline |
 
 ### 2. Job Description (JD) Matching
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/api/v1/jd/analyze` | Parse JD keywords, domain, seniority, and compute embedding session |
-| `GET` | `/api/v1/jd/{session_id}/score?user_id={id}` | Retrieve hybrid match score (vector + lexical overlap) and keyword breakdown |
+| `GET` | `/api/v1/jd/{session_id}/score?user_id={id}` | Retrieve 60/40 hybrid score (vector + lexical overlap) and keyword breakdown |
 | `GET` | `/api/v1/jd/{session_id}/matches?user_id={id}` | Retrieve ranked experience nodes matching the JD |
 
 ### 3. Role Refraction & Diff Auditing
@@ -340,9 +380,9 @@ docker-compose up -d --build
 ### 4. Resume & PDF Generation
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `POST` | `/api/v1/resume/generate` | Compile tailored ATS resume HTML for a JD session, lens, and style template |
-| `GET` | `/api/v1/resume/{resume_id}` | Fetch stored resume HTML content and metadata |
-| `POST` | `/api/v1/resume/{resume_id}/template` | Re-render existing tailored resume under another style template |
+| `POST` | `/api/v1/resume/generate` | Compile tailored ATS resume HTML for a JD session, lens, and template (`modern`, `classic`, `minimal`, `executive`) |
+| `GET` | `/api/v1/resume/{resume_id}` | Fetch stored resume HTML content and template metadata |
+| `POST` | `/api/v1/resume/{resume_id}/template` | Hot-swap and re-render existing resume under a different style template |
 | `GET` | `/api/v1/resume/{resume_id}/pdf` | Download rendered PDF version of the resume |
 | `POST` | `/api/v1/resume/render-pdf` | Directly compile any raw HTML into PDF binary |
 
@@ -351,29 +391,32 @@ docker-compose up -d --build
 | :--- | :--- | :--- |
 | `POST` | `/api/v1/agents/gap-project` | Architect a production gap-filler project addressing missing JD skills |
 | `POST` | `/api/v1/agents/mock-interview` | Generate scenario-based technical interview questions & rubrics |
-| `POST` | `/api/v1/chat/` | Conversational identity assistant query |
+| `POST` | `/api/v1/chat/` | Conversational identity assistant query grounded in candidate profile |
 
 ---
 
 ## 💻 Frontend Studio
 
-The Next.js frontend at [http://localhost:3000](http://localhost:3000) provides an intuitive developer interface organized into 6 tabs:
+The Next.js frontend at [http://localhost:3000](http://localhost:3000) provides an intuitive dark-mode developer interface organized into 6 tabs:
 
-1. **Vault Explorer:** Inspect your stored roles, achievement bullets, skill categories, and projects.
-2. **JD Match & Scoring:** Paste any target Job Description to view instant keyword extraction, hybrid compatibility score gauge, and missing skill gaps.
-3. **Refraction & Diff Studio:** Switch between the 6 lenses, view real-time factual token audits, and inspect side-by-side token diffs.
-4. **Resume & PDF Studio:** Preview ATS-formatted HTML resumes with live CSS styling and download generated PDFs in one click.
-5. **Gap Projects & Mock Interview:** Generate production project specifications to fill resume gaps and practice real-world interview scenarios.
-6. **Identity Assistant:** Chat with your career vault to brainstorm cover letters, salary negotiations, or leadership stories.
+1. **Vault Explorer & Live Editor:** Inspect and edit stored roles, achievement bullets, skill categories, and projects with real-time vector re-indexing.
+2. **JD Match & Scoring:** Paste target Job Descriptions to view instant keyword extraction, a 60/40 hybrid compatibility score gauge, and missing skill gap badges.
+3. **Refraction & Diff Studio:** Switch between the 6 engineering lenses, inspect factual token audit badges, and view side-by-side sequence diffs.
+4. **Resume & PDF Studio:** Select between **Modern**, **Classic**, **Minimal**, or **Executive** ATS templates, preview rendered HTML, and download pixel-perfect PDFs in one click.
+5. **Gap Projects & Mock Interview:** Generate production project blueprints to bridge skill gaps and practice scenario-based interview questions.
+6. **Identity Assistant:** Chat with your career vault to brainstorm tailored cover letters, behavioral examples, or salary negotiation narratives.
 
 ---
 
-## 🧪 Testing & Quality
+## 🧪 Testing & Quality Assurance
 
-LoomResume enforces strict automated testing, formatting, and linting.
+LoomResume enforces strict automated testing, code formatting, and type safety:
 
 ```bash
-# Run the complete Pytest suite
+# Run the 3-Phase Comprehensive E2E Verification Suite
+python tests/run_e2e_verification.py
+
+# Run the complete Pytest test suite
 pytest
 
 # Check code formatting with Black
@@ -393,10 +436,12 @@ mypy app
 - [x] **Phase 1: Core Vault & Ingestion:** RAG-based persistent storage with PostgreSQL pgvector embeddings.
 - [x] **Phase 2: JD Contextualization & Hybrid Matcher:** 60/40 vector semantic + lexical ATS score.
 - [x] **Phase 3: Anti-Hallucination Refraction:** 6-lens narrative reframing with fact preservation checks and diff auditing.
-- [x] **Phase 4: Tailored Resume & PDF Generation:** Dynamic ATS HTML compilation and WeasyPrint PDF export.
-- [x] **Phase 5: Career Agents:** Gap-filler project architect, mock interview generator, and identity chat assistant.
-- [x] **Phase 6: Next.js 16 Web Studio:** Interactive dark-mode dashboard with comprehensive workflow tabs.
-- [ ] **Phase 7: Automated Job Board Integrations:** Direct one-click import of JDs from LinkedIn, Greenhouse, and Lever.
+- [x] **Phase 4: Multi-Template Resume Engine & Vector PDF:** Dynamic ATS HTML compilation across 4 styles (`modern`, `classic`, `minimal`, `executive`) and WeasyPrint / Playwright PDF export.
+- [x] **Phase 5: Interactive Experience Vault Management:** Full CRUD operations and live vector re-indexing for nodes, projects, and skills.
+- [x] **Phase 6: Career Agents:** Gap-filler project architect, mock interview generator, and identity chat assistant.
+- [x] **Phase 7: Next.js 16 Web Studio:** Interactive dark-mode dashboard with comprehensive workflow tabs.
+- [x] **Phase 8: 3-Phase E2E Verification Suite:** Automated Component, Interconnectivity, and Candidate Journey testing.
+- [ ] **Phase 9: Automated Job Board Integrations:** Direct one-click import of JDs from LinkedIn, Greenhouse, and Lever.
 
 ---
 
